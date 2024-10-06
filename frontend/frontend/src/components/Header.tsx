@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import MobileNav from "./MobileNav";
 
 const Header = () => {
   return(
@@ -8,10 +7,6 @@ const Header = () => {
             <Link to="/" className="text-3x font-bold tracking-tight text-orange-500">
                 MernEats.com
             </Link>
-            <div className="md:hidden">
-              <MobileNav /> 
-               {/* hidden after screen becomes big, and shows up when then screen becomes smaller  */}
-            </div>
         </div>
     </div>
   )
