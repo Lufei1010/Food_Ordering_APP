@@ -1,3 +1,4 @@
+import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation } from "react-query";
 
     
@@ -12,10 +13,14 @@ type CreateUserRequest = {
 
 //Fetch API Call;
 export const useCreateMyUser = () => {
+    const { getAccessTokenSilently } = useAuth0(); 
+
     const createMyUserRequest = async (user: CreateUserRequest) => {
+        const accessToken = await getAccessTokenSilently();
         const response = await fetch(`${API_BASE_URL}/api/my/user`, {
             method: 'POST',
             headers: {
+                Authrization: `Bearer ${accessToken}`,
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(user),
