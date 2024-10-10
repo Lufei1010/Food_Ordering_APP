@@ -1,5 +1,4 @@
-import { useCreateMyUser } from "@/api/MyUserApi";
-import { AppState, Auth0Provider, User } from "@auth0/auth0-react";
+import { Auth0Provider } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
@@ -12,19 +11,16 @@ const Auth0ProviderWithNavigate = ({ children }: Props) => {
   // calls the custom hook defined in the API
 
   const domain = import.meta.env.VITE_AUTH0_DOMAIN;
-  // It lets you change configurations easily without altering code,
-  // keeping sensitive data secure and enabling quick environment or account updates.
   const clientID = import.meta.env.VITE_AUTH0_CLIENT_ID;
-  const redirectUri = import.meta.env.VITE_AUTH0_CALLBACK_URL;
-  // these three lines are needed whenever we initialize the SDK
+  const redirectUri = import.meta.env.VITE_AUTH0_CALLBACK_URL; // these three lines are needed whenever we initialize the SDK
+  const audience = import.meta.env.VITE_AUTH0_AUDIENCE;
 
-  if (!domain || !clientID || !redirectUri) {
+  if (!domain || !clientID || !redirectUri || !audience) {
     throw new Error("Unable to initialize Auth0");
   }
 
   // Auth0 Callback Handling
-  const onRedirectCallback = (appState?: AppState, user?: User) => {
-    console.log("USER", user);
+  const onRedirectCallback = () => {
     // Creating a User
     navigate("/auth-callback");
   };
@@ -33,7 +29,9 @@ const Auth0ProviderWithNavigate = ({ children }: Props) => {
     <Auth0Provider
       domain={domain}
       clientId={clientID}
-      authorizationParams={{ redirectUri: redirectUri }}
+      authorizationParams={{ 
+        redirectUri: redirectUri,
+        audience, }}
       onRedirectCallback={onRedirectCallback}
     >
       {children}

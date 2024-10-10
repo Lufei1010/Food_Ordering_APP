@@ -18,13 +18,13 @@ export const useCreateMyUser = () => {
     const createMyUserRequest = async (user: CreateUserRequest) => {
         const accessToken = await getAccessTokenSilently();
         const response = await fetch(`${API_BASE_URL}/api/my/user`, {
-            method: 'POST',
-            headers: {
-                Authrization: `Bearer ${accessToken}`,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(user),
-        })
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        });
 //Error Handling;
         if(!response.ok) {
             throw new Error('Failed to create user');
