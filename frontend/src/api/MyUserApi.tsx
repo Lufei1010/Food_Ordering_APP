@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation } from "react-query";
+import { toast } from "sonner";
 
     
 
@@ -20,7 +21,7 @@ export const useCreateMyUser = () => {
         const response = await fetch(`${API_BASE_URL}/api/my/user`, {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`, // Send access token for authorization
             "Content-Type": "application/json",
           },
           body: JSON.stringify(user),
@@ -84,6 +85,15 @@ export const useUpdateMyUser = () => {
     error, 
     reset 
    } = useMutation(updataMyUserRequest);
+
+   if(isSuccess) {
+    toast.success("User profile updated")
+   }
+
+   if(error) {
+    toast.error(error.toString())
+    reset(); //
+   }
 
    return { updateUser, isLoading };
 };

@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import LoadingButton from "@/components/LoadingButton";
 import { Button } from "@/components/ui/button";
 
+// Defining the schema for the form using zod validation
 const formSchema = z.object({
   email: z.string().optional(),
   name: z.string().min(1, "Name is required"),
@@ -22,14 +23,16 @@ const formSchema = z.object({
   country: z.string().min(1, "Country is required"),
 });
 
-type userFormData = z.infer<typeof formSchema>;
+type userFormData = z.infer<typeof formSchema>; // Type inferred from the schema
 
 //create actual form component below
+// Props that the UserProfileForm expects to receive
 type Props = {
-  onSave: (userProfileData: userFormData) => void;
-  isLoading: boolean;
+  onSave: (userProfileData: userFormData) => void; // Callback when form is submitted
+  isLoading: boolean; // Boolean to show loading state
 };
 
+ // Initialize form with validation using react-hook-form and zodResolver
 const UserProfileForm = ({ onSave, isLoading }: Props) => {
   const form = useForm<userFormData>({
     resolver: zodResolver(formSchema), // handle validation
