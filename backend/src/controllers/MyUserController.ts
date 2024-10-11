@@ -1,24 +1,25 @@
 import { Request, Response } from "express";
 import User from "../models/user";
 
-// handle the request from api/my/users
+// handle the POST request to create a new user at api/my/users
 const createCurrentUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   try {
     const { auth0Id } = req.body;
-    const existingUser = await User.findOne({ auth0Id });
+    const existingUser = await User.findOne({ auth0Id }); // Check if the user already exists in the DB with auth0Id
 
     if (existingUser) {
       res.status(200).send(); // Do not return the response
       return;
     }
 
-    const newUser = new User(req.body);
-    await newUser.save();
+    const newUser = new User(req.body); //create
+    await newUser.save(); //save to the database
 
-    res.status(201).json(newUser.toObject()); // Do not return the response
+    res.status(201).json(newUser.toObject()); // Send the newly created user as the response in JSON format
+
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Error creating user" }); // Do not return the response
@@ -43,7 +44,7 @@ const updateCurrentUser = async (req: Request, res: Response) => {
 
     res.send(user);
   } catch (error) {
-    console.log(error)
+    console.log(error) //for debugging
     res.status(500).json({ message: "Error updating user" }); 
   }
 }

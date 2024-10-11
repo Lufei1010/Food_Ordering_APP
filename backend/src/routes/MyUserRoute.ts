@@ -5,10 +5,11 @@ import { validateMyUserRequest } from "../middleware/validation";
 
 const router = express.Router();
 
-// sets up a POST endpoint at /api/my/users
+// sets up a POST endpoint at /api/my/users for creating a new user
 router.post("/", jwtCheck, MyUserController.createCurrentUser);
-router.put("/", jwtCheck, jwtParse, validateMyUserRequest, MyUserController.updateCurrentUser);
+router.put("/", jwtCheck, jwtParse, validateMyUserRequest, MyUserController.updateCurrentUser);// Set up the PUT route for updating a user with validation and middleware
 
 
-export default router;
-//handler and controller that handles the request to create a new user
+export default router; //export it for use in the app
+
+//handler and controller that handles the request
