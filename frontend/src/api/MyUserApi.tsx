@@ -45,3 +45,45 @@ export const useCreateMyUser = () => {
       isSuccess,
     };
 };
+//
+type UpdateMyUserRequest = {
+  name: string,
+  addressLine1: string,
+  city: string,
+  country: string,
+}
+//hook to import components
+export const useUpdateMyUser = () => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  //fetch request
+  const updataMyUserRequest = async (formData: UpdateMyUserRequest) => {
+    const accessToken = await getAccessTokenSilently();
+
+    const response = await fetch(`${API_BASE_URL}/api/my/user`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if(!response.ok) {
+      throw new Error('Failed to update user');
+    }
+
+    return response.json()
+
+  };
+
+  const {
+    mutateAsync: updateUser,
+    isLoading, isSuccess,
+    isError,
+    error, 
+    reset 
+   } = useMutation(updataMyUserRequest);
+
+   return { updateUser, isLoading };
+};
