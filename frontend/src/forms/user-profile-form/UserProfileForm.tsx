@@ -13,6 +13,8 @@ import {
 import { Input } from "@/components/ui/input";
 import LoadingButton from "@/components/LoadingButton";
 import { Button } from "@/components/ui/button";
+import { User } from "@/types";
+import { useEffect } from "react";
 
 // Defining the schema for the form using zod validation
 const formSchema = z.object({
@@ -28,15 +30,21 @@ type userFormData = z.infer<typeof formSchema>; // Type inferred from the schema
 //create actual form component below
 // Props that the UserProfileForm expects to receive
 type Props = {
+  currentUser: User;
   onSave: (userProfileData: userFormData) => void; // Callback when form is submitted
   isLoading: boolean; // Boolean to show loading state
 };
 
  // Initialize form with validation using react-hook-form and zodResolver
-const UserProfileForm = ({ onSave, isLoading }: Props) => {
+const UserProfileForm = ({ onSave, isLoading, currentUser }: Props) => {
   const form = useForm<userFormData>({
     resolver: zodResolver(formSchema), // handle validation
+    defaultValues: currentUser, // prefill form with current user data
   });
+
+  useEffect(() => {
+    form.reset(currentUser);
+  }, [ currentUser, form ]);
 
   return (
     <Form {...form}>
