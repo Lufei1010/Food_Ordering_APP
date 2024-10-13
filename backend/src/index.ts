@@ -4,6 +4,7 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import myUserRoute from "./routes/MyUserRoute";
 import { v2 as cloudinary } from "cloudinary";
+import MyRestaurantRoute from "./routes/MyRestaurantRoute";
 
 
 console.log(
@@ -39,6 +40,7 @@ app.get("/health", async (req: Request, res: Response) => {
 app.use("/api/my/user", myUserRoute);
 // it tells Express to send any requests starting with /api/my/user 
 // to the myUserRoute, which will handle the request with the right logic and database actions.
+app.use("/api/my/restaurant", MyRestaurantRoute)
 
 app.listen(7001, () => {
     console.log("server started on localhost:7001");
