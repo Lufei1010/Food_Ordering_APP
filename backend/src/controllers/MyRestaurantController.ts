@@ -9,7 +9,7 @@ const createMyRestuarant = async ( req: Request, res: Response ) => {
 
         if(existingRestaurants){
             return res
-            .status(400)
+            .status(409)
             .json({ message: "User restaurant already exists" });
         }
 

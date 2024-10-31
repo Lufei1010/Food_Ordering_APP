@@ -63,9 +63,50 @@ const ManageRestaurantForm = ({onSave, isLoading}: Props) => {
     },
   });
 
-const onSubmit=  (formDataJson: RestaurantFormData) => {
- // TODO - convert formDataJson to new FormData object
-}
+const onSubmit = (formDataJson: RestaurantFormData) => {
+  const formData = new FormData();
+
+  console.log("Form Data JSON:", formDataJson); // Log the form data
+
+  formData.append("restaurantName", formDataJson.restaurantName);
+  formData.append("city", formDataJson.city);
+  formData.append("country", formDataJson.country);
+
+  // Check delivery price and estimated delivery time
+  console.log("Delivery Price:", formDataJson.deliveryPrice);
+  console.log("Estimated Delivery Time:", formDataJson.estimatedDeliveryTime);
+
+  formData.append(
+    "deliveryPrice",
+    (formDataJson.deliveryPrice * 100).toString()
+  );
+  formData.append(
+    "estimatedDeliveryTime",
+    formDataJson.estimatedDeliveryTime.toString()
+  );
+  formDataJson.cuisines.forEach((cuisine, index) => {
+    formData.append(`cuisines[${index}]`, cuisine);
+  });
+  formDataJson.menuItems.forEach((menuItem, index) => {
+    if (!menuItem.name) {
+        console.error(`Menu item ${index} name is missing`);
+        return; // Skip adding this menu item
+    }
+    if (!menuItem.price || menuItem.price <= 0) {
+        console.error(`Menu item ${index} price is invalid`);
+        return; // Skip adding this menu item
+    }
+    formData.append(`menuItems[${index}][name]`, menuItem.name);
+    formData.append(`menuItems[${index}][price]`, (menuItem.price * 100).toString());
+});
+
+
+  if (formDataJson.imageFile) {
+    formData.append(`imageFile`, formDataJson.imageFile);
+  }
+
+  onSave(formData);
+};
 
   return (
     <Form {...form}>
