@@ -27,4 +27,13 @@ router.post(
   MyRestaurantController.createMyRestuarant
 );
 
+router.put(
+  "/",
+  upload.single("imageFile"), //multer middleware, add file into object to the request. do all the requried stuff before validation
+  validateMyRestaurantRequest,
+  jwtCheck,
+  jwtParse,
+  MyRestaurantController.updateMyRestaurant//handler function
+);
+
 export default router;

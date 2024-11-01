@@ -126,7 +126,7 @@ const onSubmit = (formDataJson: RestaurantFormData) => {
 });
 
 
-  if (formDataJson.imageFile) {
+  if (formDataJson.imageFile) { // has the undefine possiblely
     formData.append(`imageFile`, formDataJson.imageFile);
   }
 
