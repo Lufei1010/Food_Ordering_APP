@@ -132,7 +132,6 @@ const onSubmit = (formDataJson: RestaurantFormData) => {
 
   onSave(formData);
 };
-
   return (
     <Form {...form}>
       <form
