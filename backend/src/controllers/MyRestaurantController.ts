@@ -3,6 +3,7 @@ import Restaurant from '../models/restaurant';
 import cloudinary from 'cloudinary';
 import mongoose from 'mongoose';
 
+
 const getMyRestaurant = async (req: Request, res: Response) => {
     try{
         const restaurants = await Restaurant.findOne({ user: req.userId });
