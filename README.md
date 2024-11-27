@@ -1,5 +1,6 @@
 # Food_Ordering_APP
 ## Description
+The project was built by following a tutorial by **Chris Blakely**. The original code can be found in their GitHub repository here: (https://github.com/chrisblakely01).
 This project is a full-stack web application for managing restaurant orders, featuring user authentication, restaurant creation, and order management with payment processing via Stripe. It provides a responsive design for both mobile and desktop users. The app allows users to search restaurants, manage orders, and securely process payments, with the backend and frontend deployed on Render for easy access and management.
 
 ## Technologies Used
